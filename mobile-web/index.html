@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>SAI Fitness Assessment - Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .mobile-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .screen {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            min-height: 80vh;
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .nav-tab {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tab.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #F59E0B, #FBBF24);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .test-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border-left: 4px solid #F59E0B;
+        }
+        
+        .test-number {
+            font-size: 12px;
+            font-weight: bold;
+            color: #F59E0B;
+            margin-bottom: 5px;
+        }
+        
+        .test-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .test-quality {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #F59E0B;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .form-input::placeholder {
+            color: #666;
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .rank {
+            font-size: 18px;
+            font-weight: bold;
+            color: #F59E0B;
+        }
+        
+        .user-info {
+            flex: 1;
+            margin-left: 15px;
+        }
+        
+        .user-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .user-test {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .score {
+            font-size: 16px;
+            font-weight: bold;
+            color: #F59E0B;
+        }
+        
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .admin-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .admin-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #F59E0B;
+            margin-bottom: 5px;
+        }
+        
+        .admin-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .video-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .analysis-progress {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #F59E0B, #FBBF24);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            .mobile-container {
+                padding: 5px;
+            }
+            
+            .logo {
+                font-size: 28px;
+            }
+            
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <div class="header">
+            <div class="logo">SAI FITNESS</div>
+            <div class="subtitle">AI-Powered Assessment</div>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showScreen('dashboard')">🏠</button>
+            <button class="nav-tab" onclick="showScreen('tests')">🎯</button>
+            <button class="nav-tab" onclick="showScreen('record')">📹</button>
+            <button class="nav-tab" onclick="showScreen('results')">📊</button>
+            <button class="nav-tab" onclick="showScreen('leaderboard')">🏆</button>
+            <button class="nav-tab" onclick="showScreen('admin')">⚙️</button>
+        </div>
+        
+        <!-- Dashboard Screen -->
+        <div id="dashboard" class="screen active">
+            <h2>Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Tests Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">78%</div>
+                    <div class="stat-label">Average Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Intermediate</div>
+                    <div class="stat-label">Level</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Tests Remaining</div>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="showScreen('tests')">Start New Test</button>
+            <button class="btn btn-secondary" onclick="showScreen('results')">View Results</button>
+            <button class="btn btn-secondary" onclick="showScreen('leaderboard')">Leaderboard</button>
+        </div>
+        
+        <!-- Tests Screen -->
+        <div id="tests" class="screen">
+            <h2>Fitness Tests</h2>
+            <div class="test-grid">
+                <div class="test-card" onclick="selectTest('Height')">
+                    <div class="test-number">Test 1</div>
+                    <div class="test-name">Height</div>
+                    <div class="test-quality">Measurement</div>
+                </div>
+                <div class="test-card" onclick="selectTest('Weight')">
+                    <div class="test-number">Test 2</div>
+                    <div class="test-name">Weight</div>
+                    <div class="test-quality">Measurement</div>
+                </div>
+                <div class="test-card" onclick="selectTest('Sit and Reach')">
+                    <div class="test-number">Test 3</div>
+                    <div class="test-name">Sit and Reach</div>
+                    <div class="test-quality">Flexibility</div>
+                </div>
+                <div class="test-card" onclick="selectTest('Vertical Jump')">
+                    <div class="test-number">Test 4</div>
+                    <div class="test-name">Vertical Jump</div>
+                    <div class="test-quality">Explosive Strength</div>
+                </div>
+                <div class="test-card" onclick="selectTest('Broad Jump')">
+                    <div class="test-number">Test 5</div>
+                    <div class="test-name">Broad Jump</div>
+                    <div class="test-quality">Explosive Strength</div>
+                </div>
+                <div class="test-card" onclick="selectTest('Medicine Ball Throw')">
+                    <div class="test-number">Test 6</div>
+                    <div class="test-name">Medicine Ball Throw</div>
+                    <div class="test-quality">Upper Body Strength</div>
+                </div>
+                <div class="test-card" onclick="selectTest('Sprint 30m')">
+                    <div class="test-number">Test 7</div>
+                    <div class="test-name">Sprint 30m</div>
+                    <div class="test-quality">Speed</div>
+                </div>
+                <div class="test-card" onclick="selectTest('Shuttle Run')">
+                    <div class="test-number">Test 8</div>
+                    <div class="test-name">Shuttle Run</div>
+                    <div class="test-quality">Agility</div>
+                </div>
+                <div class="test-card" onclick="selectTest('Sit Ups')">
+                    <div class="test-number">Test 9</div>
+                    <div class="test-name">Sit Ups</div>
+                    <div class="test-quality">Core Strength</div>
+                </div>
+                <div class="test-card" onclick="selectTest('Endurance Run')">
+                    <div class="test-number">Test 10</div>
+                    <div class="test-name">Endurance Run</div>
+                    <div class="test-quality">Endurance</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Video Recording Screen -->
+        <div id="record" class="screen">
+            <h2>Record Test</h2>
+            <div class="video-container">
+                <div class="video-placeholder">📹</div>
+                <button class="btn" onclick="startRecording()">Start Recording</button>
+                <button class="btn btn-secondary" onclick="stopRecording()">Stop Recording</button>
+            </div>
+            
+            <div class="analysis-progress" id="analysisProgress" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="progress-text" id="progressText">Analyzing video...</div>
+            </div>
+        </div>
+        
+        <!-- Results Screen -->
+        <div id="results" class="screen">
+            <h2>Test Results</h2>
+            <div class="stat-card">
+                <div class="stat-number">85%</div>
+                <div class="stat-label">Vertical Jump Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">65.5 cm</div>
+                <div class="stat-label">Jump Height</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">Good</div>
+                <div class="stat-label">Performance Level</div>
+            </div>
+            
+            <button class="btn" onclick="showScreen('tests')">Take Another Test</button>
+            <button class="btn btn-secondary" onclick="showScreen('leaderboard')">View Leaderboard</button>
+        </div>
+        
+        <!-- Leaderboard Screen -->
+        <div id="leaderboard" class="screen">
+            <h2>Leaderboard</h2>
+            <div class="leaderboard-item">
+                <div class="rank">1</div>
+                <div class="user-info">
+                    <div class="user-name">Rajesh Kumar</div>
+                    <div class="user-test">Vertical Jump</div>
+                </div>
+                <div class="score">95%</div>
+            </div>
+            <div class="leaderboard-item">
+                <div class="rank">2</div>
+                <div class="user-info">
+                    <div class="user-name">Priya Sharma</div>
+                    <div class="user-test">Sprint 30m</div>
+                </div>
+                <div class="score">92%</div>
+            </div>
+            <div class="leaderboard-item">
+                <div class="rank">3</div>
+                <div class="user-info">
+                    <div class="user-name">Amit Singh</div>
+                    <div class="user-test">Sit Ups</div>
+                </div>
+                <div class="score">89%</div>
+            </div>
+            <div class="leaderboard-item">
+                <div class="rank">4</div>
+                <div class="user-info">
+                    <div class="user-name">Sneha Patel</div>
+                    <div class="user-test">Broad Jump</div>
+                </div>
+                <div class="score">87%</div>
+            </div>
+            <div class="leaderboard-item">
+                <div class="rank">5</div>
+                <div class="user-info">
+                    <div class="user-name">Vikram Reddy</div>
+                    <div class="user-test">Shuttle Run</div>
+                </div>
+                <div class="score">85%</div>
+            </div>
+        </div>
+        
+        <!-- Admin Screen -->
+        <div id="admin" class="screen">
+            <h2>Admin Dashboard</h2>
+            <div class="admin-stats">
+                <div class="admin-card">
+                    <div class="admin-number">1,250</div>
+                    <div class="admin-label">Total Users</div>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-number">8,750</div>
+                    <div class="admin-label">Tests Completed</div>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-number">78.5%</div>
+                    <div class="admin-label">Average Score</div>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-number">25</div>
+                    <div class="admin-label">Pending Reviews</div>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="showScreen('dashboard')">User View</button>
+            <button class="btn btn-secondary" onclick="showScreen('tests')">Manage Tests</button>
+        </div>
+    </div>
+    
+    <script>
+        let currentTest = '';
+        let isRecording = false;
+        
+        function showScreen(screenName) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            
+            // Show selected screen
+            document.getElementById(screenName).classList.add('active');
+            
+            // Update nav tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+        
+        function selectTest(testName) {
+            currentTest = testName;
+            alert(`Selected: ${testName}\n\nClick the Record button to start video recording for this test.`);
+            showScreen('record');
+        }
+        
+        function startRecording() {
+            if (!currentTest) {
+                alert('Please select a test first!');
+                showScreen('tests');
+                return;
+            }
+            
+            isRecording = true;
+            alert(`🎬 Recording started for ${currentTest}!\n\nIn a real app, this would:\n- Access your camera\n- Record video with AI analysis\n- Provide real-time feedback\n- Detect cheating attempts`);
+            
+            // Simulate analysis
+            setTimeout(() => {
+                document.getElementById('analysisProgress').style.display = 'block';
+                simulateAnalysis();
+            }, 2000);
+        }
+        
+        function stopRecording() {
+            if (!isRecording) return;
+            
+            isRecording = false;
+            alert('⏹️ Recording stopped!\n\nVideo saved and ready for AI analysis.');
+        }
+        
+        function simulateAnalysis() {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                document.getElementById('progressFill').style.width = progress + '%';
+                document.getElementById('progressText').textContent = `Analyzing video... ${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('progressText').textContent = 'Analysis complete!';
+                    setTimeout(() => {
+                        showScreen('results');
+                    }, 1000);
+                }
+            }, 200);
+        }
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('SAI Fitness Assessment Mobile App loaded!');
+        });
+    </script>
+</body>
+</html>
