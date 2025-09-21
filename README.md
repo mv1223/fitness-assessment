@@ -74,8 +74,8 @@ Before running this project, ensure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/sai-fitness-assessment.git
-cd sai-fitness-assessment
+git clone https://github.com/mv1223/fitness-assessment.git
+cd fitness-assessment
 ```
 
 ### 2. Install Dependencies
@@ -226,8 +226,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For support and questions:
 - **Email:** support@sai-fitness-assessment.com
-- **Documentation:** [Project Wiki](https://github.com/your-username/sai-fitness-assessment/wiki)
-- **Issues:** [GitHub Issues](https://github.com/your-username/sai-fitness-assessment/issues)
+- **Documentation:** [Project Wiki](https://github.com/mv1223/fitness-assessment/wiki)
+- **Issues:** [GitHub Issues](https://github.com/mv1223/fitness-assessment/issues)
 
 ## 🔮 Future Enhancements
 
