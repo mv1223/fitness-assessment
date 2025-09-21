@@ -1,4 +1,4 @@
-# SAI Fitness Assessment - AI-Powered Mobile App
+# SAP Fitness Assessment - AI-Powered Mobile App
 
 A comprehensive mobile application for the Sports Authority of India (SAI) that democratizes sports talent assessment through AI-powered video analysis and standardized fitness testing.
 
@@ -225,7 +225,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 For support and questions:
-- **Email:** support@sai-fitness-assessment.com
+- **Email:** mohanvamsi885@gmail.com
 - **Documentation:** [Project Wiki](https://github.com/mv1223/fitness-assessment/wiki)
 - **Issues:** [GitHub Issues](https://github.com/mv1223/fitness-assessment/issues)
 
